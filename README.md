@@ -1,68 +1,80 @@
-⚡ TypeForge
+
+<h1>⚡ TypeForge</h1>
 Professional Typing Analytics & Speed Test Engine
 
-A zero-dependency, offline-first, commercial-grade typing matrix system
+TypeForge is a zero-dependency, offline-first, production-grade typing analytics engine designed for high-performance front-end portfolios and serious engineering demonstrations.
 
-☀️ Light Mode
-<img width="1918" height="981" alt="Screenshot 2026-06-13 190223" src="https://github.com/user-attachments/assets/24550e9a-fca1-421d-a477-b4bebaaf355f" />
-🌙 Dark Mode
-<img width="1919" height="1004" alt="Screenshot 2026-06-13 190109" src="https://github.com/user-attachments/assets/af152aca-452f-43b3-9372-b2d1dd21d571" />
-  Result
-<img width="1919" height="984" alt="Screenshot 2026-06-13 190243" src="https://github.com/user-attachments/assets/153c8392-3f6e-496e-938e-ed2946f8ed94" />
+Built using pure HTML, CSS, and Vanilla JavaScript, TypeForge delivers real-time diagnostics, hardened anti-cheat protection, and precision typing metrics—all inside a single standalone file.
 
+No frameworks. No APIs. No build tools.
+Just clean, deterministic engineering.
 
+<h1>🖥️ Interface Preview</h1>
 
-TypeForge is a standalone, production-level typing analytics engine engineered specifically for high-performance front-end portfolios. Built with pure HTML, CSS, and Vanilla JavaScript, it runs entirely offline while delivering precision-grade diagnostics, real-time feedback, and hardened anti-cheat controls.
+<h2>🌙 Dark Mode</h2>
+<img width="1919" height="1004" alt="Dark Mode" src="https://github.com/user-attachments/assets/af152aca-452f-43b3-9372-b2d1dd21d571" />
 
-No frameworks. No APIs. No build tools. Just engineering.
+<h2>☀️ Light Mode</h2>
+<img width="1918" height="981" alt="Light Mode" src="https://github.com/user-attachments/assets/24550e9a-fca1-421d-a477-b4bebaaf355f" />
+
+<h2>📊 Results & Analytics</h2>
+<img width="1919" height="984" alt="Results" src="https://github.com/user-attachments/assets/153c8392-3f6e-496e-938e-ed2946f8ed94" />
+
 
 🚀 Core Capabilities
+
 🧠 Typing Engine (Low-Latency Core)
 Atomic Real-Time Detection
-Character-by-character evaluation using indexed string matrices and deterministic array loops.
+Character-by-character validation using indexed string matrices and deterministic evaluation loops.
 Visual Caret Intelligence
-Correct input → Green highlight
-Incorrect input → Red with soft warning feedback
-Active index → Animated caret underline
+
+✅ Correct input → Green highlight
+
+❌ Incorrect input → Red feedback with soft alert
+⌖ Active index → Animated caret underline
 Anti-Abuse & Cheat Shielding
-Clipboard injection fully blocked (Copy / Paste / Select-All)
+Clipboard blocking (Copy / Paste / Select All)
 Context menu isolation
 Programmatic input bypass prevention
+
 📊 Advanced Typing Analytics
 True Net WPM
-Formula: (Total Characters ÷ 5) ÷ Time (minutes)
+(Total Characters ÷ 5) ÷ Time (minutes)
 Gross CPM
-Raw keystroke throughput measurement.
+Absolute keystroke throughput measurement.
 Live Accuracy Rating
-Precision calculated dynamically against total input vs error count.
+Real-time precision calculation against active error count.
 Extended Diagnostics
 Error tracking
 Backspace behavior logging
 Retroactive correction detection
+
 🎨 Premium UI / UX Architecture
 Adaptive Theme Engine
+
 ☀️ Light Mode & 🌙 Dark Mode
-Auto-persisted via localStorage
+Persisted using localStorage
 Instant toggle with zero reload cost
 Fluid Motion System
 Sub-second easing curves
 Soft elevation cards
 Linear gradient accent layers
 Telemetry Virtual Keyboard
-Real-time key-press visualization mapped to user input.
-🛠️ Engineering Architecture (The Hard Work)
+
+Real-time key-press visualization mapped directly to user input.
+🛠️ Engineering Architecture
 1️⃣ Zero-Asset Audio System (Web Audio API)
 
-No external audio files. No base64 bloat.
+No external sound files. No base64 bloat.
 
-Sound feedback is generated dynamically using native Web Audio API oscillators:
+Audio feedback is generated dynamically using native Web Audio API oscillators:
 
 ✅ Correct Keystroke
 High-frequency sine wave with short envelope
 ❌ Incorrect Keystroke
 Low-frequency triangle wave with dampened decay
 
-This guarantees instant playback, zero asset loading, and full offline compatibility.
+This ensures instant playback, zero asset loading, and full offline compatibility.
 
 2️⃣ High-Density DOM Delta Diffing
 Test text is pre-split into immutable .char-span nodes
@@ -71,11 +83,11 @@ Only targeted class tokens are mutated
 No container rewrites
 No layout thrashing
 
-Result: 60 FPS performance even on low-power devices
+Result: Smooth 60 FPS performance, even on low-power devices.
 
 3️⃣ Isolated State Engine
 
-All runtime variables are encapsulated inside a single structured JavaScript closure:
+All runtime logic is encapsulated inside a single structured JavaScript closure:
 
 Timers
 Metrics
@@ -83,20 +95,21 @@ Error counters
 User preferences
 Configuration switches
 
-This creates a single source of truth and guarantees predictable UI updates.
+This creates a single source of truth and guarantees predictable UI behavior.
 
 ⚙️ Configuration Options
 Feature	Type	Available Options
 Difficulty Level	String Segment	Easy / Medium / Hard
 Time Limit	Integer	30s / 60s / 120s
 Audio Feedback	Boolean	On / Muted
-Persistence Cache	Local Storage	Automatic session analytics
+Persistence Cache	Local Storage	Automatic analytics storage
+
 💻 Installation & Offline Deployment
 
 TypeForge is fully offline-ready. No setup required.
 
 Clone the Repository
-git clone https://github.com/Mr-Nilarnab/typeforge-engine.git
+git clone https://github.com/Mr-Nilarnab/-TypeForge-Professional-Typing-Analytics-Speed-Test.git
 Run Instantly
 Locate index.html
 Double-click the file
@@ -116,4 +129,4 @@ All system architecture, typing logic, analytics formulas, Web Audio synthesis, 
 
 🔗 Repository
 
-TypeForge GitHub Repository
+TypeForge – Professional Typing Analytics & Speed Test
