@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚡ TypeForge // one of MR NILARNAB creation</title>
+    <style>
+        :root {
+            --bg-base: #0f172a;
+            --bg-surface: #1e293b;
+            --bg-surface-elevated: #334155;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --success: #10b981;
+            --error: #ef4444;
+            --error-bg: rgba(239, 68, 68, 0.15);
+            --caret: #6366f1;
+            --border: #334155;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+            --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-mono: "Courier New", Courier, monospace;
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        [data-theme="light"] {
+            --bg-base: #f8fafc;
+            --bg-surface: #ffffff;
+            --bg-surface-elevated: #f1f5f9;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --success: #059669;
+            --error: #dc2626;
+            --error-bg: rgba(220, 38, 38, 0.1);
+            --caret: #4f46e5;
+            --border: #e2e8f0;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+            overflow-x: hidden;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            background-color: var(--bg-surface);
+            border-bottom: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            z-index: 10;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.05em;
+            background: linear-gradient(to right, var(--primary), #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn-icon {
+            background: var(--bg-surface-elevated);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .btn-icon:hover {
+            transform: scale(1.05);
+            border-color: var(--primary);
+        }
+
+        .main-container {
+            flex: 1;
+            max-width: 1100px;
+            width: 100%;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .config-card {
+            background-color: var(--bg-surface);
+            border-radius: 1rem;
+            padding: 1.25rem;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .config-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .config-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            font-weight: 700;
+        }
+
+        .segmented-control {
+            display: flex;
+            background-color: var(--bg-surface-elevated);
+            padding: 0.25rem;
+            border-radius: 0.5rem;
+            border: 1px solid var(--border);
+        }
+
+        .segment-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 0.5rem 1.25rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .segment-btn.active {
+            background-color: var(--primary);
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        .live-stats-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1rem;
+            width: 100%;
+        }
+
+        .stat-card {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--border);
+        }
+
+        .stat-card.active-stat::before {
+            background: var(--primary);
+        }
+
+        .stat-val {
+            font-size: 1.75rem;
+            font-weight: 800;
+            font-family: var(--font-mono);
+            color: var(--text-main);
+        }
+
+        .stat-lbl {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-top: 0.25rem;
+        }
+
+        .typing-wrapper {
+            position: relative;
+            background-color: var(--bg-surface);
+            border-radius: 1rem;
+            padding: 2rem;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            cursor: text;
+        }
+
+        .progress-bar-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background-color: var(--bg-surface-elevated);
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(to right, var(--primary), #a855f7);
+            transform-origin: left;
+            transition: transform 0.1s linear;
+        }
+
+        .hidden-input {
+            position: absolute;
+            opacity: 0;
+            z-index: -10;
+        }
+
+        .typing-container {
+            font-family: var(--font-mono);
+            font-size: 1.35rem;
+            line-height: 2;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+            letter-spacing: 0.02em;
+            height: 160px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .word-span {
+            display: inline-block;
+            margin-right: 0.6rem;
+        }
+
+        .char-span {
+            position: relative;
+            color: var(--text-muted);
+            transition: color 0.1s ease;
+        }
+
+        .char-span.correct {
+            color: var(--success);
+        }
+
+        .char-span.incorrect {
+            color: var(--error);
+            background-color: var(--error-bg);
+            border-radius: 2px;
+        }
+
+        .char-span.current {
+            color: var(--text-main);
+        }
+
+        .char-span.current::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 100%;
+            height: 2px;
+            background-color: var(--caret);
+            animation: blink 0.9s infinite;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        .focus-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(4px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 1rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition);
+            z-index: 5;
+        }
+
+        [data-theme="light"] .focus-overlay {
+            background-color: rgba(248, 250, 252, 0.85);
+        }
+
+        .focus-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .focus-msg {
+            background: var(--bg-surface);
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            font-weight: 700;
+            color: var(--primary);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+        }
+
+        .control-strip {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .btn-action {
+            background-color: var(--bg-surface);
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-action:hover {
+            border-color: var(--primary);
+            background-color: var(--bg-surface-elevated);
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: #ffffff;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .keyboard-container {
+            background-color: var(--bg-surface);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .kbd-row {
+            display: flex;
+            justify-content: center;
+            gap: 0.35rem;
+            width: 100%;
+        }
+
+        .key {
+            background-color: var(--bg-surface-elevated);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            border-radius: 0.35rem;
+            height: 42px;
+            min-width: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            transition: background 0.05s ease, transform 0.05s ease;
+        }
+
+        .key.active-key {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: scale(0.95);
+        }
+
+        .key.space { width: 300px; }
+        .key.backspace { min-width: 80px; }
+        .key.tab { min-width: 60px; }
+        .key.caps { min-width: 75px; }
+        .key.enter { min-width: 85px; }
+        .key.shift { min-width: 105px; }
+
+        .modal-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition);
+            padding: 1rem;
+        }
+
+        .modal-layer.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-card {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 1.5rem;
+            max-width: 650px;
+            width: 100%;
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            position: relative;
+            transform: scale(0.9);
+            transition: var(--transition);
+        }
+
+        .modal-layer.active .modal-card {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .modal-title {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(to right, var(--primary), #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .motivation-banner {
+            background-color: var(--bg-surface-elevated);
+            padding: 1rem;
+            border-radius: 0.75rem;
+            text-align: center;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--primary);
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .result-item {
+            background-color: var(--bg-surface-elevated);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .result-val {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+            font-family: var(--font-mono);
+        }
+
+        .result-lbl {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            font-weight: 700;
+            margin-top: 0.25rem;
+        }
+
+        .tabs-nav {
+            display: flex;
+            gap: 0.5rem;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 1.5rem;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 0.75rem 1.5rem;
+            font-weight: 700;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        .history-table th {
+            color: var(--text-muted);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            padding: 0.75rem;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .history-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .readme-text {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        .readme-text h3 {
+            color: var(--text-main);
+            margin: 1.25rem 0 0.5rem;
+        }
+
+        .readme-text ul {
+            padding-left: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border);
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow);
+            transform: translateY(150%);
+            transition: var(--transition);
+            z-index: 1000;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-left: 4px solid var(--success);
+        }
+
+        .toast.active {
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .config-card { flex-direction: column; align-items: stretch; }
+            .keyboard-container { display: none; }
+            .results-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body data-theme="dark">
+
+    <header>
+        <div class="brand">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+            TypeForge //
+        </div>
+        <div class="nav-actions">
+            <button class="btn-icon" id="soundToggle" title="Toggle Sound">
+                <svg id="soundOnIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                <svg id="soundOffIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+            </button>
+            <button class="btn-icon" id="themeToggle" title="Toggle Theme">
+                <svg id="sunIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                <svg id="moonIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            </button>
+            <button class="btn-icon" id="docsToggle" title="Documentation & App Readme">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+            </button>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="config-card">
+            <div class="config-group">
+                <span class="config-label">Difficulty</span>
+                <div class="segmented-control" id="difficultyConfig">
+                    <button class="segment-btn active" data-val="easy">Easy</button>
+                    <button class="segment-btn" data-val="medium">Medium</button>
+                    <button class="segment-btn" data-val="hard">Hard</button>
+                </div>
+            </div>
+            <div class="config-group">
+                <span class="config-label">Time Target</span>
+                <div class="segmented-control" id="timeConfig">
+                    <button class="segment-btn active" data-val="30">30s</button>
+                    <button class="segment-btn" data-val="60">60s</button>
+                    <button class="segment-btn" data-val="120">120s</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="live-stats-bar">
+            <div class="stat-card active-stat">
+                <div class="stat-val" id="liveTimer">60</div>
+                <div class="stat-lbl">Time Left</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-val" id="liveWpm">0</div>
+                <div class="stat-lbl">WPM</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-val" id="liveAccuracy">100%</div>
+                <div class="stat-lbl">Accuracy</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-val" id="liveErrors">0</div>
+                <div class="stat-lbl">Errors</div>
+            </div>
+        </div>
+
+        <div class="typing-wrapper" id="typingAreaTrigger">
+            <div class="progress-bar-container">
+                <div class="progress-fill" id="progressBar"></div>
+            </div>
+            <div class="focus-overlay" id="focusOverlay">
+                <div class="focus-msg">Clicking here aligns your engine keyboard focus</div>
+            </div>
+            <input type="text" class="hidden-input" id="keyboardEngineInput" autocomplete="off" autocapitalize="off" spellcheck="false">
+            <div class="typing-container" id="textRenderer"></div>
+        </div>
+
+        <div class="control-strip">
+            <button class="btn-action btn-primary" id="btnRestart">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>
+                Restart Simulation
+            </button>
+            <button class="btn-action" id="btnClearHistory">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                Purge Analytics History
+            </button>
+        </div>
+
+        <div class="keyboard-container" id="virtualKeyboard">
+            <div class="kbd-row">
+                <div class="key" id="key-`Template">`</div><div class="key" id="key-1">1</div><div class="key" id="key-2">2</div><div class="key" id="key-3">3</div><div class="key" id="key-4">4</div><div class="key" id="key-5">5</div><div class="key" id="key-6">6</div><div class="key" id="key-7">7</div><div class="key" id="key-8">8</div><div class="key" id="key-9">9</div><div class="key" id="key-0">0</div><div class="key" id="key--">-</div><div class="key" id="key-=">=</div><div class="key backspace">backspace</div>
+            </div>
+            <div class="kbd-row">
+                <div class="key tab">tab</div><div class="key" id="key-q">q</div><div class="key" id="key-w">w</div><div class="key" id="key-e">e</div><div class="key" id="key-r">r</div><div class="key" id="key-t">t</div><div class="key" id="key-y">y</div><div class="key" id="key-u">u</div><div class="key" id="key-i">i</div><div class="key" id="key-o">o</div><div class="key" id="key-p">p</div><div class="key" id="key-[">[</div><div class="key" id="key-]">]</div><div class="key" id="key-\">\</div>
+            </div>
+            <div class="kbd-row">
+                <div class="key caps">caps lock</div><div class="key" id="key-a">a</div><div class="key" id="key-s">s</div><div class="key" id="key-d">d</div><div class="key" id="key-f">f</div><div class="key" id="key-g">g</div><div class="key" id="key-h">h</div><div class="key" id="key-j">j</div><div class="key" id="key-k">k</div><div class="key" id="key-l">l</div><div class="key" id="key-;">;</div><div class="key" id="key-'">"</div><div class="key enter">enter</div>
+            </div>
+            <div class="kbd-row">
+                <div class="key shift">shift</div><div class="key" id="key-z">z</div><div class="key" id="key-x">x</div><div class="key" id="key-c">c</div><div class="key" id="key-v">v</div><div class="key" id="key-b">b</div><div class="key" id="key-n">n</div><div class="key" id="key-m">m</div><div class="key" id="key-,">,</div><div class="key" id="key-.">.</div><div class="key" id="key-/">/</div><div class="key shift">shift</div>
+            </div>
+            <div class="kbd-row">
+                <div class="key space" id="key- ">space</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-layer" id="analyticsModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div class="modal-title" id="modalHeading">Simulation Report</div>
+            </div>
+
+            <div class="motivation-banner" id="motivationMsg">
+                Performance parameters calculated perfectly!
+            </div>
+
+            <div class="tabs-nav">
+                <button class="tab-btn active" data-tab="tabScore">Performance Scoreboard</button>
+                <button class="tab-btn" data-tab="tabHistory">Historical Diagnostics</button>
+                <button class="tab-btn" data-tab="tabReadme">App Repository Documentation</button>
+            </div>
+
+            <div class="tab-content active" id="tabScore">
+                <div class="results-grid">
+                    <div class="result-item">
+                        <div class="result-val" id="resWpm">0</div>
+                        <div class="result-lbl">Words Per Minute</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-val" id="resCpm">0</div>
+                        <div class="result-lbl">Characters Per Minute</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-val" id="resAccuracy">100%</div>
+                        <div class="result-lbl">Accuracy Rating</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-val" id="resMetrics">E: 0 | B: 0</div>
+                        <div class="result-lbl">Errors & Backspaces</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="tabHistory">
+                <div style="overflow-x:auto;">
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th>Timestamp</th>
+                                <th>Diff</th>
+                                <th>WPM</th>
+                                <th>CPM</th>
+                                <th>Acc%</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyTableBody">
+                            <tr>
+                                <td colspan="5" style="text-align:center; color:var(--text-muted);">No records found. Complete a typing module.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="tab-content" id="tabReadme">
+                <div class="readme-text">
+                    <h3> CreatorMR NILARNAB</h3>
+
+                    <h3>📂 Professional Typing Speed Engine</h3>
+                    <p>A zero-dependency, ultra-premium production-grade typing matrix engine optimized entirely for offline diagnostics. Built explicitly for deployment within clean client-side static portfolios.</p>
+                    
+                    <h3>🚀 Architecture Mechanics</h3>
+                    <ul>
+                        <li><strong>Zero Assets/Framework Matrix:</strong> Utilizes programmatic oscillator nodes via the standard HTML5 Web Audio API to deliver crisp mechanics audio feedback natively without external file loads.</li>
+                        <li><strong>Precision Metrics Integration:</strong> Tracks precise atomic key indexing, dynamic delta timing, and explicit array evaluation loops to isolate true net performance coefficients.</li>
+                        <li><strong>Anti-Abuse Core Architecture:</strong> Includes direct context shielding, selection prevents, and event tracking blocks to disable runtime validation injections or programmatic clipboard paste configurations.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="control-strip" style="margin-top:2rem;">
+                <button class="btn-action btn-primary" id="btnModalClose">Close Analytics Panel</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="systemToast">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+        <span id="toastMsg">Operational Matrix Configured Successfully</span>
+    </div>
+
+    <script>
+        // High Fidelity Paragraph Library
+        const ParagraphDatabase = {
+            easy: [
+                "one of MR NILARNAB creation.the quick brown fox jumps over the lazy dog and runs away to safety",
+                "one of MR NILARNAB creation.sound waves travel through the clear open air across the blue ocean waves",
+                "one of MR NILARNAB creation.light colors contrast perfectly against dark background canvas elements on screens",
+                "one of MR NILARNAB creation.every morning brings a brand new opportunity to learn something complex and cool",
+                "one of MR NILARNAB creation.simple code modules are usually much easier to maintain over long periods"
+            ],
+            medium: [
+                "one of MR NILARNAB creation. Developing resilient web applications requires an intricate understanding of underlying execution context layers, component state lifecycles, and network asset pipelines.",
+                "one of MR NILARNAB creation.Responsive styling systems adapt visual layout hierarchies across fluctuating viewport resolutions while carefully prioritizing critical CSS engine layout paths.",
+                "one of MR NILARNAB creation.Modern browsers coordinate structural document modification operations through an optimization loop consisting of event evaluation, style recalculation, and layout paint passes.",
+                "one of MR NILARNAB creation.User interface paradigms leverage predictable state transitions combined with crisp micro-interactions to yield maximum ergonomic utility and execution throughput.",
+                "one of MR NILARNAB creation.Optimizing dynamic script assets guarantees minimal operational overhead during early critical runtime loading phases across remote environments."
+            ],
+            hard: [
+                "one of MR NILARNAB creation.const processMatrix = (delta, threshold) => { return delta.filter(node => node.val >= threshold).reduce((acc, curr) => acc + Math.pow(curr.weight, 2), 0); };",
+                "one of MR NILARNAB creation.Under standardized ECMAScript specifications, asynchronous task execution queues separate microtask processing loops cleanly from structural macro rendering contexts.",
+                "one of MR NILARNAB creation.Engineers executing cryptographic functions must meticulously configure salting factors, tokenization hashes, and entropy levels to thwart adversarial structural parsing vectors.",
+                "one of MR NILARNAB creation.The systemic orchestration of stateful microservices demands automated horizontal scaling protocols, load balanced request pipelines, and isolated runtime containers.",
+                "one of MR NILARNAB creation.document.addEventListener('keydown', (e) => { if(e.key === 'Escape') { systemDiagnostics.terminateSession(); console.log('System forced halt!'); } });"
+            ]
+        };
+
+        // Application State Management Registry
+        let state = {
+            theme: 'dark',
+            sound: true,
+            difficulty: 'easy',
+            targetTime: 30,
+            timeLeft: 30,
+            isActive: false,
+            textString: '',
+            currentIndex: 0,
+            errors: 0,
+            backspaces: 0,
+            totalStrokes: 0,
+            timerId: null,
+            analyticsHistory: []
+        };
+
+        // Web Audio Synthesizer Engine
+        const SoundMatrix = {
+            audioCtx: null,
+            init() {
+                if (!this.audioCtx) {
+                    this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+            },
+            trigger(type) {
+                if (!state.sound) return;
+                this.init();
+                
+                const osc = this.audioCtx.createOscillator();
+                const gain = this.audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(this.audioCtx.destination);
+
+                if (type === 'correct') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(580, this.audioCtx.currentTime);
+                    gain.gain.setValueAtTime(0.08, this.audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, this.audioCtx.currentTime + 0.04);
+                    osc.start();
+                    osc.stop(this.audioCtx.currentTime + 0.04);
+                } else if (type === 'error') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(140, this.audioCtx.currentTime);
+                    gain.gain.setValueAtTime(0.18, this.audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, this.audioCtx.currentTime + 0.12);
+                    osc.start();
+                    osc.stop(this.audioCtx.currentTime + 0.12);
+                }
+            }
+        };
+
+        // UI Element Selectors
+        const textRenderer = document.getElementById('textRenderer');
+        const keyboardEngineInput = document.getElementById('keyboardEngineInput');
+        const focusOverlay = document.getElementById('focusOverlay');
+        const typingAreaTrigger = document.getElementById('typingAreaTrigger');
+        const progressBar = document.getElementById('progressBar');
+        
+        const liveTimer = document.getElementById('liveTimer');
+        const liveWpm = document.getElementById('liveWpm');
+        const liveAccuracy = document.getElementById('liveAccuracy');
+        const liveErrors = document.getElementById('liveErrors');
+
+        const difficultyConfig = document.getElementById('difficultyConfig');
+        const timeConfig = document.getElementById('timeConfig');
+        const btnRestart = document.getElementById('btnRestart');
+        const btnClearHistory = document.getElementById('btnClearHistory');
+        const themeToggle = document.getElementById('themeToggle');
+        const soundToggle = document.getElementById('soundToggle');
+        const docsToggle = document.getElementById('docsToggle');
+
+        const analyticsModal = document.getElementById('analyticsModal');
+        const btnModalClose = document.getElementById('btnModalClose');
+        const modalHeading = document.getElementById('modalHeading');
+        const motivationMsg = document.getElementById('motivationMsg');
+        const resWpm = document.getElementById('resWpm');
+        const resCpm = document.getElementById('resCpm');
+        const resAccuracy = document.getElementById('resAccuracy');
+        const resMetrics = document.getElementById('resMetrics');
+        const historyTableBody = document.getElementById('historyTableBody');
+        const systemToast = document.getElementById('systemToast');
+        const toastMsg = document.getElementById('toastMsg');
+
+        // Application Lifecycles & Instantiations
+        window.addEventListener('DOMContentLoaded', () => {
+            loadLocalStorageData();
+            initializeConfigurationModules();
+            resetSimulationMatrix();
+            attachSecurityGuards();
+        });
+
+        function loadLocalStorageData() {
+            if (localStorage.getItem('forgeTheme')) {
+                state.theme = localStorage.getItem('forgeTheme');
+                document.body.setAttribute('data-theme', state.theme);
+                updateThemeToggleUI();
+            }
+            if (localStorage.getItem('forgeSound')) {
+                state.sound = localStorage.getItem('forgeSound') === 'true';
+                updateSoundToggleUI();
+            }
+            if (localStorage.getItem('forgeHistory')) {
+                try {
+                    state.analyticsHistory = JSON.parse(localStorage.getItem('forgeHistory'));
+                } catch (e) {
+                    state.analyticsHistory = [];
+                }
+            }
+        }
+
+        function triggerNotification(msg) {
+            toastMsg.innerText = msg;
+            systemToast.classList.add('active');
+            setTimeout(() => systemToast.classList.remove('active'), 2500);
+        }
+
+        function attachSecurityGuards() {
+            // Anti-Cheat Layer Execution
+            document.addEventListener('contextmenu', e => e.preventDefault());
+            document.addEventListener('keydown', e => {
+                if ((e.ctrlKey || e.metaKey) && (e.key === 'c' || e.key === 'v' || e.key === 'a')) {
+                    e.preventDefault();
+                    triggerNotification("Security Override: Clipboard operations disabled.");
+                }
+            });
+            keyboardEngineInput.addEventListener('paste', e => e.preventDefault());
+            keyboardEngineInput.addEventListener('copy', e => e.preventDefault());
+        }
+
+        function initializeConfigurationModules() {
+            // Segmented Controls Event Delegation
+            difficultyConfig.addEventListener('click', e => {
+                if (!e.target.classList.contains('segment-btn')) return;
+                Array.from(difficultyConfig.children).forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                state.difficulty = e.target.getAttribute('data-val');
+                resetSimulationMatrix();
+            });
+
+            timeConfig.addEventListener('click', e => {
+                if (!e.target.classList.contains('segment-btn')) return;
+                Array.from(timeConfig.children).forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                state.targetTime = parseInt(e.target.getAttribute('data-val'));
+                resetSimulationMatrix();
+            });
+
+            // Action Buttons Hooking
+            btnRestart.addEventListener('click', () => resetSimulationMatrix());
+            btnClearHistory.addEventListener('click', () => {
+                state.analyticsHistory = [];
+                localStorage.removeItem('forgeHistory');
+                triggerNotification("Analytical history database successfully purged.");
+                buildHistoryTable();
+            });
+
+            // UI Actions
+            themeToggle.addEventListener('click', () => {
+                state.theme = state.theme === 'dark' ? 'light' : 'dark';
+                document.body.setAttribute('data-theme', state.theme);
+                localStorage.setItem('forgeTheme', state.theme);
+                updateThemeToggleUI();
+            });
+
+            soundToggle.addEventListener('click', () => {
+                state.sound = !state.sound;
+                localStorage.setItem('forgeSound', state.sound);
+                updateSoundToggleUI();
+            });
+
+            docsToggle.addEventListener('click', () => {
+                openTargetModalTab('tabReadme');
+                modalHeading.innerText = "System Documentation";
+                motivationMsg.style.display = 'none';
+                analyticsModal.classList.add('active');
+            });
+
+            btnModalClose.addEventListener('click', () => analyticsModal.classList.remove('active'));
+
+            // Modular Input Engine Syncs
+            typingAreaTrigger.addEventListener('click', () => keyboardEngineInput.focus());
+            keyboardEngineInput.addEventListener('focus', () => focusOverlay.classList.remove('active'));
+            keyboardEngineInput.addEventListener('blur', () => {
+                if (state.isActive) focusOverlay.classList.add('active');
+            });
+
+            keyboardEngineInput.addEventListener('input', evaluatedInputMatrix);
+
+            // Tab Navigation inside Modals
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                    e.target.classList.add('active');
+                    document.getElementById(e.target.getAttribute('data-tab')).classList.add('active');
+                });
+            });
+        }
+
+        function updateThemeToggleUI() {
+            const sun = document.getElementById('sunIcon');
+            const moon = document.getElementById('moonIcon');
+            if (state.theme === 'light') {
+                sun.style.display = 'block';
+                moon.style.display = 'none';
+            } else {
+                sun.style.display = 'none';
+                moon.style.display = 'block';
+            }
+        }
+
+        function updateSoundToggleUI() {
+            const son = document.getElementById('soundOnIcon');
+            const soff = document.getElementById('soundOffIcon');
+            if (state.sound) {
+                son.style.display = 'block';
+                soff.style.display = 'none';
+            } else {
+                son.style.display = 'none';
+                soff.style.display = 'block';
+            }
+        }
+
+        function openTargetModalTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(b => {
+                if (b.getAttribute('data-tab') === tabId) b.classList.add('active');
+                else b.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-content').forEach(c => {
+                if (c.id === tabId) c.classList.add('active');
+                else c.classList.remove('active');
+            });
+        }
+
+        // Core Matrix Reset Mechanics
+        function resetSimulationMatrix() {
+            clearInterval(state.timerId);
+            const paragraphPool = ParagraphDatabase[state.difficulty];
+            state.textString = paragraphPool[Math.floor(Math.random() * paragraphPool.length)];
+            
+            state.timeLeft = state.targetTime;
+            state.currentIndex = 0;
+            state.errors = 0;
+            state.backspaces = 0;
+            state.totalStrokes = 0;
+            state.isActive = false;
+
+            keyboardEngineInput.value = '';
+            liveTimer.innerText = state.timeLeft;
+            liveWpm.innerText = '0';
+            liveAccuracy.innerText = '100%';
+            liveErrors.innerText = '0';
+            progressBar.style.transform = 'scaleX(1)';
+
+            renderStructuralCharacters();
+            focusOverlay.classList.remove('active');
+            keyboardEngineInput.focus();
+        }
+
+        function renderStructuralCharacters() {
+            textRenderer.innerHTML = '';
+            // Optimization segment: compile DOM elements into virtual stream arrays
+            const chars = state.textString.split('');
+            chars.forEach((char, idx) => {
+                const span = document.createElement('span');
+                span.classList.add('char-span');
+                if (idx === 0) span.classList.add('current');
+                span.innerText = char;
+                textRenderer.appendChild(span);
+            });
+        }
+
+        // Input Assessment Pipeline Execution Engine
+        function evaluatedInputMatrix(e) {
+            const inputValue = keyboardEngineInput.value;
+            const inputLength = inputValue.length;
+            const totalChars = state.textString.length;
+
+            if (!state.isActive && inputLength > 0) {
+                startSimulationTimer();
+            }
+
+            // Capture structural backspace event actions through metric delta checks
+            if (inputLength < state.currentIndex) {
+                state.backspaces += (state.currentIndex - inputLength);
+                state.currentIndex = inputLength;
+                SoundMatrix.trigger('correct');
+                recalculateRealtimeMetrics();
+                updateVisualCharactersGrid();
+                return;
+            }
+
+            state.totalStrokes++;
+            const processingCharIndex = inputLength - 1;
+            const typedChar = inputValue[processingCharIndex];
+            const targetChar = state.textString[processingCharIndex];
+
+            // Virtual keyboard telemetry parsing mapping configurations
+            highlightVirtualKey(typedChar);
+
+            if (typedChar === targetChar) {
+                SoundMatrix.trigger('correct');
+            } else {
+                state.errors++;
+                SoundMatrix.trigger('error');
+            }
+
+            state.currentIndex = inputLength;
+            recalculateRealtimeMetrics();
+            updateVisualCharactersGrid();
+
+            // Evaluate programmatic processing completion boundary states
+            if (state.currentIndex >= totalChars) {
+                terminateSimulationMatrix(true);
+            }
+        }
+
+        function highlightVirtualKey(char) {
+            if (!char) return;
+            let lookupKey = char.toLowerCase();
+            if (lookupKey === ' ') lookupKey = ' ';
+            
+            // Handle edge punctuation mappings inside interface references
+            let elementId = `key-${lookupKey}`;
+            let keyEl = document.getElementById(elementId);
+            if (keyEl) {
+                keyEl.classList.add('active-key');
+                setTimeout(() => keyEl.classList.remove('active-key'), 90);
+            }
+        }
+
+        function updateVisualCharactersGrid() {
+            const spans = textRenderer.querySelectorAll('.char-span');
+            const inputValue = keyboardEngineInput.value;
+
+            spans.forEach((span, idx) => {
+                span.classList.remove('correct', 'incorrect', 'current');
+                
+                if (idx < inputValue.length) {
+                    if (inputValue[idx] === state.textString[idx]) {
+                        span.classList.add('correct');
+                    } else {
+                        span.classList.add('incorrect');
+                    }
+                } else if (idx === inputValue.length) {
+                    span.classList.add('current');
+                }
+            });
+
+            // Handle standard dynamic auto scrolling for massive vertical wrappers
+            const currentSpan = textRenderer.querySelector('.char-span.current');
+            if (currentSpan) {
+                const containerHeight = textRenderer.clientHeight;
+                const spanTop = currentSpan.offsetTop;
+                if (spanTop > containerHeight - 60) {
+                    textRenderer.scrollTop = spanTop - (containerHeight / 2);
+                } else {
+                    textRenderer.scrollTop = 0;
+                }
+            }
+        }
+
+        function recalculateRealtimeMetrics() {
+            const timeElapsed = state.targetTime - state.timeLeft;
+            const timeFactor = timeElapsed > 0 ? timeElapsed / 60 : 1 / 60;
+            
+            // Standard Typing Calculation Metrics Formula Metrics Matrix
+            const wpm = Math.round((state.currentIndex / 5) / timeFactor);
+            const accuracy = state.currentIndex > 0 ? Math.round(((state.currentIndex - state.errors) / state.currentIndex) * 100) : 100;
+
+            liveWpm.innerText = wpm;
+            liveAccuracy.innerText = `${Math.max(0, accuracy)}%`;
+            liveErrors.innerText = state.errors;
+        }
+
+        function startSimulationTimer() {
+            state.isActive = true;
+            state.timerId = setInterval(() => {
+                state.timeLeft--;
+                liveTimer.innerText = state.timeLeft;
+                
+                // Progress Bar Scaling Calculations
+                const progressRatio = state.timeLeft / state.targetTime;
+                progressBar.style.transform = `scaleX(${progressRatio})`;
+
+                recalculateRealtimeMetrics();
+
+                if (state.timeLeft <= 0) {
+                    terminateSimulationMatrix(false);
+                }
+            }, 1000);
+        }
+
+        function terminateSimulationMatrix(completedNaturally) {
+            clearInterval(state.timerId);
+            state.isActive = false;
+            focusOverlay.classList.remove('active');
+
+            const timeElapsed = completedNaturally ? (keyboardEngineInput.value.length / (parseInt(liveWpm.innerText) || 40)) * 12 : state.targetTime;
+            const finalTimeFactor = timeElapsed > 0 ? timeElapsed / 60 : state.targetTime / 60;
+            
+            const calculatedWpm = Math.max(0, Math.round((keyboardEngineInput.value.length / 5) / finalTimeFactor));
+            const calculatedCpm = Math.max(0, Math.round(keyboardEngineInput.value.length / finalTimeFactor));
+            const calculatedAcc = keyboardEngineInput.value.length > 0 ? Math.round(((keyboardEngineInput.value.length - state.errors) / keyboardEngineInput.value.length) * 100) : 100;
+
+            // Save metrics performance packet inside localized record sets
+            const logItem = {
+                timestamp: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'}),
+                difficulty: state.difficulty,
+                wpm: calculatedWpm,
+                cpm: calculatedCpm,
+                accuracy: Math.max(0, calculatedAcc)
+            };
+            state.analyticsHistory.unshift(logItem);
+            localStorage.setItem('forgeHistory', JSON.stringify(state.analyticsHistory));
+
+            // Hydrate Display Scoreboard Modals
+            resWpm.innerText = logItem.wpm;
+            resCpm.innerText = logItem.cpm;
+            resAccuracy.innerText = `${logItem.accuracy}%`;
+            resMetrics.innerText = `E: ${state.errors} | B: ${state.backspaces}`;
+
+            // Configure performance motivation scripts
+            motivationMsg.style.display = 'block';
+            if (logItem.wpm > 75) {
+                motivationMsg.innerText = "⚡ Elite Velocity! Your keystroke coordination parameters align with master software architectures.";
+                motivationMsg.style.borderColor = "var(--success)";
+            } else if (logItem.wpm > 45) {
+                motivationMsg.innerText = "🚀 Professional Calibration. Steady configuration throughput, minimal syntax validation structural delays.";
+                motivationMsg.style.borderColor = "var(--primary)";
+            } else {
+                motivationMsg.innerText = "📈 System Warm-up phase tracked. Focus on tactical spatial accuracy vectors to clear processing barriers.";
+                motivationMsg.style.borderColor = "var(--error)";
+            }
+
+            modalHeading.innerText = "Simulation Analytics Report";
+            buildHistoryTable();
+            openTargetModalTab('tabScore');
+            analyticsModal.classList.add('active');
+        }
+
+        function buildHistoryTable() {
+            if (state.analyticsHistory.length === 0) {
+                historyTableBody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:var(--text-muted);">No records found. Complete a typing module.</td></tr>`;
+                return;
+            }
+
+            historyTableBody.innerHTML = '';
+            state.analyticsHistory.slice(0, 15).forEach(row => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${row.timestamp}</td>
+                    <td style="text-transform:uppercase; font-size:0.75rem; font-weight:700;">${row.difficulty}</td>
+                    <td style="font-family:var(--font-mono); font-weight:700; color:var(--primary);">${row.wpm}</td>
+                    <td style="font-family:var(--font-mono);">${row.cpm}</td>
+                    <td style="font-family:var(--font-mono);">${row.accuracy}%</td>
+                `;
+                historyTableBody.appendChild(tr);
+            });
+        }
+    </script>
+</body>
+</html>
